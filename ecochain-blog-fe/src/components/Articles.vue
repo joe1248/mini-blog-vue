@@ -1,7 +1,18 @@
 <template>
   <div class="articles">
-    <div v-for="(article, index)  in articles" :key="index">
+    <div v-for="(article, index)  in pagedArticles" :key="index">
       <Article v-bind="article"></Article>
+    </div>
+    <!-- Pagination offset="offset" limit="limit" @click="fetchStories(pagination.prev_page_url)"/-->
+    <div class="pagination">
+      <button class="btn btn-default" @click="pagination.current_page--"
+              :disabled="pagination.current_page <= 1">
+        Previous
+      </button>
+      <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span>
+      <button class="btn btn-default" @click="pagination.current_page++"
+              :disabled="pagination.current_page >= pagination.last_page">Next
+      </button>
     </div>
   </div>
 </template>
@@ -44,9 +55,28 @@ export default class Articles extends Vue {
     'title': 'Cupim enim veniam',
     'content': 'Cupim enim veniam salami eiusmod meatloaf.  Dolor drumstick beef ribs excepteur spare ribs esse magna turducken labore kielbasa fugiat ut in do meatball.  Hamburger turkey ut short loin brisket.  Swine pancetta id bacon, aliquip tenderloin ipsum andouille chicken minim eiusmod picanha deserunt pork chop.\n\nIrure salami elit, drumstick capicola in deserunt pork loin.  Meatloaf swine frankfurter, rump ut prosciutto duis pariatur salami kielbasa venison cupidatat filet mignon ex shankle.  Pig doner ham hock, duis eiusmod rump shankle dolor.  Ea venison dolor shoulder deserunt magna.\n\nJowl nulla reprehenderit, venison velit filet mignon anim beef ribs picanha chicken.  Lorem culpa capicola, exercitation aliquip hamburger ullamco beef ribs elit et tenderloin est.  Qui adipisicing ham hock eu fatback.  Shankle nisi nulla eiusmod pancetta corned beef sed fugiat dolor reprehenderit do ea deserunt.  Qui salami meatloaf cupidatat minim tempor.\n\nCow dolore est, veniam brisket ribeye ham hock do nisi ut magna.  Cupim deserunt laborum chuck aliqua short ribs non ribeye in swine bacon.  Est id dolore ea et pastrami alcatra.  Qui ex pork loin picanha, pig ut kielbasa kevin bacon.  Andouille elit cupidatat, labore fugiat salami velit corned beef dolore pastrami proident commodo pork loin.\n\nUt burgdoggen qui short loin.  Tenderloin shankle in, anim consequat pork belly deserunt.  Quis fugiat chuck enim, venison bresaola non irure sirloin pork chop.  Burgdoggen duis consequat sint turkey pastrami.  Cupim chicken magna enim spare ribs consequat minim corned beef consectetur sirloin porchetta do jerky ad.  Minim commodo chicken porchetta.  Ground round picanha pork chop, ham hock laboris pork loin voluptate cupidatat lorem filet mignon officia turkey cupim tongue capicola.',
     'createdAt': '2018-02-15 22:40:43'
-  }]
+  }];
+
+  pagination = {
+    current_page: 2,
+    last_page: 3,
+    next_page_url: 'next', // data.next_page_url,
+    prev_page_url: 'prev' // data.prev_page_url
+  };
+
+  // computed
+  get pagedArticles () {
+    const limit = 2
+    return this.articles.slice(
+      (this.pagination.current_page - 1) * limit,
+      (this.pagination.current_page - 1) * limit + limit
+    )
+  }
 }
 </script>
 
 <style scoped>
+  .pagination {
+    padding-top: 50px;
+  }
 </style>

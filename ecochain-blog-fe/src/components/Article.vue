@@ -7,7 +7,7 @@
     <p v-if="isArticleTrimmed" >{{ contentTrimmed }}</p>
     <a v-if="isArticleTrimmed" @click="isArticleTrimmed=false">Read more</a>
 
-    <p v-else="isArticleTrimmed" >{{ content }}</p>
+    <p v-else>{{ content }}</p>
   </div>
 </template>
 
@@ -18,21 +18,24 @@ import Component from 'vue-class-component'
 @Component({
   props: {
     title: String,
-    content: String,
+    content: {
+      default: 'Article coming soon...',
+      type: String
+    },
     createdAt: String
   },
   components: {}
 })
 
 export default class Article extends Vue {
-  // props (used in computed or methods) have to be declared and initialised for typescript
-  content: string = this.content || 'Article coming soon...';
+  // props (used in computed or methods) have to be declared for typescript
+  content: string;
 
   // data
   isArticleTrimmed: boolean = true;
 
   // computed
-  get contentTrimmed() {
+  get contentTrimmed () {
     return this.content.substr(0, 350)
   }
 }
