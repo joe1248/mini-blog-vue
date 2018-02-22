@@ -1,17 +1,18 @@
 <template>
-  <div class="articles">
+  <div>
     <div v-for="(article, index)  in pagedArticles" :key="index">
       <Article v-bind="article"></Article>
     </div>
     <!-- Pagination offset="offset" limit="limit" @click="fetchStories(pagination.prev_page_url)"/-->
-    <div class="pagination">
+    <div class="pagination" >
       <button class="btn btn-default" @click="pagination.current_page--"
               :disabled="pagination.current_page <= 1">
         Previous
       </button>
       <span>Page {{pagination.current_page}} of {{pagination.last_page}}</span>
       <button class="btn btn-default" @click="pagination.current_page++"
-              :disabled="pagination.current_page >= pagination.last_page">Next
+              :disabled="pagination.current_page >= pagination.last_page">
+        Next
       </button>
     </div>
   </div>
@@ -77,6 +78,10 @@ export default class Articles extends Vue {
 
 <style scoped>
   .pagination {
-    padding-top: 50px;
+    padding-top: 20px;
+    text-align: center;
+  }
+  .pagination span {
+    margin: 20px;
   }
 </style>

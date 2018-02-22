@@ -1,14 +1,16 @@
 <template>
-  <div class="article">
-    <h2>
+  <article class="flow-text">
+
+    <h4>
       {{ title }}
-      <span>{{ createdAt }}</span>
-    </h2>
-    <p v-if="isArticleTrimmed" >{{ contentTrimmed }}</p>
+      <span class="right">{{ createdAt }}</span>
+    </h4>
+
+    <p v-if="isArticleTrimmed">{{ contentTrimmed }}...</p>
     <a v-if="isArticleTrimmed" @click="isArticleTrimmed=false">Read more</a>
 
     <p v-else>{{ content }}</p>
-  </div>
+  </article>
 </template>
 
 <script lang="ts">
@@ -41,14 +43,7 @@ export default class Article extends Vue {
 }
 </script>
 <style scoped>
-  h2 {
-    text-align: left;
-
-  }
-  h2 span {
-    float: right;
-  }
-  p {
-    text-align: left;
+  article {
+    padding-bottom:30px;
   }
 </style>
