@@ -24,7 +24,8 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import Article from './Article.vue'
-import DummyData from './DummyData.js'
+import {ArticleInterface} from '../types/ArticleInterface'
+import {getAllArticles} from './DummyData'
 
 @Component({
   props: {
@@ -44,14 +45,14 @@ export default class Articles extends Vue {
   pagination = {
     current_page: this.currentPage,
     last_page: 3,
-    next_page_url: 'next', // data.next_page_url,
+    next_page_url: 'next', // data.next_page_url ,
     prev_page_url: 'prev' // data.prev_page_url
   };
   pagedArticles: Array<Object> = [];
 
   created () {
     const limit = 2
-    const articles: Array<Object> = DummyData.articles()
+    const articles: Array<ArticleInterface> = getAllArticles()
     this.pagedArticles = articles.slice(
       (parseInt(this.currentPage) - 1) * limit,
       (parseInt(this.currentPage) - 1) * limit + limit
