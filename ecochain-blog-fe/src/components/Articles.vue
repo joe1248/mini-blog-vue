@@ -5,13 +5,13 @@
     </div>
     <!-- Pagination offset="offset" limit="limit" @click="fetchStories(pagination.prev_page_url)"/-->
     <div class="pagination" >
-      <router-link :to="{name: 'Articles', params: { currentPage: parseInt(currentPage) - 1 } }"
+      <router-link :to="{name: 'Articles', params: { currentPage: (parseInt(currentPage) - 1).toString() } }"
                    class="btn btn-default"
                    :disabled="parseInt(currentPage) <= 1">
         Previous
       </router-link>
       <span>Page {{currentPage}} of {{pagination.last_page}}</span>
-      <router-link :to="{name: 'Articles', params: { currentPage: parseInt(currentPage) + 1} }"
+      <router-link :to="{name: 'Articles', params: { currentPage: (parseInt(currentPage) + 1).toString() } }"
                    class="btn btn-default"
                    :disabled="parseInt(currentPage) >= pagination.last_page">
         Next
@@ -30,8 +30,8 @@ import {getAllArticles} from './DummyData'
 @Component({
   props: {
     currentPage: {
-      default: 1,
-      type: Number
+      default: '1',
+      type: String
     }
   },
   components: {

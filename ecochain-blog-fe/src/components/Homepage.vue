@@ -22,7 +22,7 @@ import Articles from './Articles.vue'
 
 @Component({
   props: {
-    currentPage: Number
+    currentPage: String
   },
   components: {
     Articles

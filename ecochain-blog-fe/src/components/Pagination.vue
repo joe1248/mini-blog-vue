@@ -17,7 +17,7 @@ import Component from 'vue-class-component'
 
 @Component({
   props: {
-    currentPage: Number,
+    currentPage: String,
     lastPage: Number
   },
   components: {

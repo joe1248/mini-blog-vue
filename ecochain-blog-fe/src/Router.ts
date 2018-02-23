@@ -15,14 +15,14 @@ export default new Router({
       props: { currentPage : 1 }
     },
     {
-      path: '/articles/:currentPage',
+      path: '/list-of-articles/page-:currentPage',
       name: 'Articles',
       component: Homepage,
       meta: {title: 'Articles'},
       props: true,
     },
     {
-      path: '/Article/:id',
+      path: '/view-article/article-:id',
       name: 'ArticleView',
       component: Article,
       meta: {title: 'Read Articles'},
