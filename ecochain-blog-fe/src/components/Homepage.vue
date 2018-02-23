@@ -1,7 +1,7 @@
 <template>
   <div class="flex-container">
     <div class="column_left">
-      <Articles />
+      <Articles :current-page="currentPage"/>
     </div>
     <div class="column_right">
       <!-- Move to SearchField Component -->
@@ -21,7 +21,9 @@ import Component from 'vue-class-component'
 import Articles from './Articles.vue'
 
 @Component({
-  props: {},
+  props: {
+    currentPage: Number
+  },
   components: {
     Articles
   }
