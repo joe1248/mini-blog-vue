@@ -13,13 +13,13 @@
     <div class="card-action">
       <router-link v-if="isArticleTrimmed"
                    :to="{name: 'ArticleView', params: { id, currentParentPage } }"
-                   class="blue-text">
-        Read More
+                   class="blue-text card-action-fix">
+        Read more &gt;&gt;
       </router-link>
       <router-link v-else
                    :to="{name: 'Articles', params: { currentPage: currentParentPage } }"
-                   class="blue-text">
-        Go Back
+                   class="blue-text card-action-fix">
+        Go back
       </router-link>
     </div>
 
@@ -83,5 +83,8 @@ export default class Article extends Vue {
 <style scoped>
   .smaller_font {
     font-size: smaller;
+  }
+  .card-action-fix {
+    text-transform: none !important;
   }
 </style>

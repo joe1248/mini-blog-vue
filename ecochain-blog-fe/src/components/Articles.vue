@@ -48,7 +48,7 @@ export default class Articles extends Vue {
     next_page_url: 'next', // data.next_page_url ,
     prev_page_url: 'prev' // data.prev_page_url
   };
-  pagedArticles: Array<Object> = [];
+  pagedArticles: Array<ArticleInterface> = [];
 
   created () {
     const limit = 2
