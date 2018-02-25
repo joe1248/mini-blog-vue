@@ -22,9 +22,8 @@ export default {
 
 <style>
   .centered {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 45%;
+    left: 45%;
   }
 </style>

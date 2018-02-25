@@ -6,7 +6,7 @@
     </div>
     <div v-else>
       <div v-for="(article, index)  in pagedArticles" :key="index">
-        <Article v-bind:id="article.id" :isArticleTrimmed="true" :currentParentPage="currentPage"></Article>
+        <Article v-bind="article" :isArticleTrimmed="true" :currentParentPage="currentPage"></Article>
       </div>
       <!-- Pagination offset="offset" limit="limit" @click="fetchStories(pagination.prev_page_url)"/-->
       <div class="pagination" >

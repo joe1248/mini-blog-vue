@@ -5,7 +5,7 @@
         <form>
           <div class="input-field">
             <input v-model="searchedQuery" id="search" type="search" class="grey lighten-5 blue-text"
-                   v-on:keyup="searchInArticles">
+                   v-on:keyup="searchInArticlesDebounced">
             <label for="search"><i class="material-icons">search</i></label>
             <i class="material-icons">close</i>
           </div>
@@ -27,6 +27,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import * as _ from 'lodash'
 import {ArticleInterface} from '../types/ArticleInterface'
 import ApiService from '../ApiService'
 
@@ -40,11 +41,17 @@ import ApiService from '../ApiService'
 export default class Search extends Vue {
   // data
   error: string = '';
+  previousSearchedQuery: string = '';
   searchedQuery: string = '';
   results: Array<ArticleInterface> = [];
 
+  searchInArticlesDebounced = _.debounce(() => {
+    this.searchInArticles()
+  }, 500);
+
   searchInArticles () {
-    if (this.searchedQuery) {
+    if (this.searchedQuery && this.searchedQuery !== this.previousSearchedQuery) {
+      this.previousSearchedQuery = this.searchedQuery
       ApiService.searchArticles(
         this.searchedQuery,
         (err: string, articles: Array<ArticleInterface>) => {

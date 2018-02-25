@@ -3,7 +3,7 @@
     <Loader v-if="loading"></Loader>
     <div v-else>
       <div class="card-content">
-        <h4 class="truncate">
+        <h4>
           {{ title }}
           <span class="right smaller_font">{{ createdAt }}</span>
         </h4>
@@ -12,7 +12,7 @@
       </div>
       <div class="card-action">
         <router-link v-if="isArticleTrimmed"
-                     :to="{name: 'ArticleView', params: { id, currentParentPage } }"
+                     :to="{name: 'ArticleView', params: { id, title, content, createdAt, currentParentPage } }"
                      class="blue-text card-action-fix">
           Read more &gt;&gt;
         </router-link>
@@ -39,6 +39,18 @@ import ApiService from '../ApiService'
       required: true,
       type: String
     },
+    title: {
+      default: '',
+      type: String
+    },
+    content: {
+      default: '',
+      type: String
+    },
+    createdAt: {
+      default: '',
+      type: String
+    },
     isArticleTrimmed: {
       default: false,
       type: Boolean
@@ -55,15 +67,15 @@ import ApiService from '../ApiService'
 
 export default class Article extends Vue {
   // props (used in computed or methods) have to be declared for typescript
-  id: string;
-  isArticleTrimmed: boolean;
+  id: string
+  title: string
+  content: string
+  createdAt: string
+  isArticleTrimmed: boolean
 
   // data
-  loading: boolean = false;
-  error: string = '';
-  title: string;
-  content: string;
-  createdAt: string;
+  loading: boolean = false
+  error: string = ''
 
   // computed
   get contentTrimmed () {
@@ -71,7 +83,7 @@ export default class Article extends Vue {
   }
 
   created () {
-    if (this.id) {
+    if (this.id && !this.title) {
       this.fetchData()
     }
   }
