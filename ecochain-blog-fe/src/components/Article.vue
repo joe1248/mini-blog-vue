@@ -1,36 +1,37 @@
 <template>
   <article class="flow-text card">
-
-    <div class="card-content">
-      <h4 class="truncate">
-        {{ title }}
-        <span class="right smaller_font">{{ createdAt }}</span>
-      </h4>
-      <p v-if="isArticleTrimmed">{{ contentTrimmed }}...</p>
-      <p v-else>{{ content }}</p>
+    <Loader v-if="loading"></Loader>
+    <div v-else>
+      <div class="card-content">
+        <h4 class="truncate">
+          {{ title }}
+          <span class="right smaller_font">{{ createdAt }}</span>
+        </h4>
+        <p v-if="isArticleTrimmed">{{ contentTrimmed }}...</p>
+        <p v-else>{{ content }}</p>
+      </div>
+      <div class="card-action">
+        <router-link v-if="isArticleTrimmed"
+                     :to="{name: 'ArticleView', params: { id, currentParentPage } }"
+                     class="blue-text card-action-fix">
+          Read more &gt;&gt;
+        </router-link>
+        <router-link v-else
+                     :to="{name: 'Articles', params: { currentPage: currentParentPage } }"
+                     class="blue-text card-action-fix">
+          Go back
+        </router-link>
+      </div>
     </div>
-
-    <div class="card-action">
-      <router-link v-if="isArticleTrimmed"
-                   :to="{name: 'ArticleView', params: { id, currentParentPage } }"
-                   class="blue-text card-action-fix">
-        Read more &gt;&gt;
-      </router-link>
-      <router-link v-else
-                   :to="{name: 'Articles', params: { currentPage: currentParentPage } }"
-                   class="blue-text card-action-fix">
-        Go back
-      </router-link>
-    </div>
-
   </article>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import Loader from './Loader.vue'
 import {ArticleInterface} from '../types/ArticleInterface'
-import {getAllArticles} from './DummyData'
+import ApiService from '../ApiService'
 
 @Component({
   props: {
@@ -47,7 +48,9 @@ import {getAllArticles} from './DummyData'
       type: String
     }
   },
-  components: {}
+  components: {
+    Loader
+  }
 })
 
 export default class Article extends Vue {
@@ -56,6 +59,8 @@ export default class Article extends Vue {
   isArticleTrimmed: boolean;
 
   // data
+  loading: boolean = false;
+  error: string = '';
   title: string;
   content: string;
   createdAt: string;
@@ -67,16 +72,25 @@ export default class Article extends Vue {
 
   created () {
     if (this.id) {
-      const articles: Array<ArticleInterface> = getAllArticles()
-      for (let i = 0; i < articles.length; i++) {
-        const article: ArticleInterface = articles[i]
-        if (this.id === article.id) {
-          this.title = article.title
-          this.content = article.content
-          this.createdAt = article.createdAt
-        }
-      }
+      this.fetchData()
     }
+  }
+
+  fetchData () {
+    this.loading = true
+    ApiService.getOneArticle(
+      this.id,
+      (err: string, article: ArticleInterface) => {
+        this.loading = false
+        if (err) {
+          this.error = err
+          return
+        }
+        this.title = article.title
+        this.content = article.content
+        this.createdAt = article.createdAt
+      }
+    )
   }
 }
 </script>

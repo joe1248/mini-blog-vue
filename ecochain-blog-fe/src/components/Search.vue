@@ -28,7 +28,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {ArticleInterface} from '../types/ArticleInterface'
-import {getAllArticles} from './DummyData'
+import ApiService from '../ApiService'
 
 @Component({
   props: {
@@ -38,13 +38,24 @@ import {getAllArticles} from './DummyData'
 })
 
 export default class Search extends Vue {
-  searchedQuery: String;
+  // data
+  error: string = '';
+  searchedQuery: string = '';
   results: Array<ArticleInterface> = [];
 
   searchInArticles () {
-    this.$nextTick(function () {
-      this.results = getAllArticles()
-    })
+    if (this.searchedQuery) {
+      ApiService.searchArticles(
+        this.searchedQuery,
+        (err: string, articles: Array<ArticleInterface>) => {
+          if (err) {
+            this.error = err
+            return
+          }
+          this.results = articles
+        }
+      )
+    }
   }
 }
 </script>
