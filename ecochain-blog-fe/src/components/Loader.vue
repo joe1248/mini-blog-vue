@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-  <div class="preloader-wrapper big active">
+  <div class="preloader-wrapper big active centered">
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">
         <div class="circle"></div>
@@ -19,3 +19,12 @@ export default {
     </div>
   </div>
 </template>
+
+<style>
+  .centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>

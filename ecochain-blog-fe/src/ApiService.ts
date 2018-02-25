@@ -3,8 +3,8 @@ import ApiServiceHelper from './lib/ApiServiceHelper';
 import DummyData from './lib/DummyData'
 
 class ApiService {
-  devMode: boolean = true;
-  baseUrl: string = 'http://api.blog.ecochain.com';
+  devMode: boolean = false;
+  baseUrl: string = 'http://localhost'; // 'http://api.blog.ecochain.com';
   apiServiceHelper: any;
   dummyApiServiceHelper: any;
 

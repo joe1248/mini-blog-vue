@@ -87,8 +87,8 @@ export default class Article extends Vue {
           return
         }
         this.title = article.title
-        this.content = article.content
-        this.createdAt = article.createdAt
+        this.content = article.content || ''
+        this.createdAt = article.createdAt || ''
       }
     )
   }
