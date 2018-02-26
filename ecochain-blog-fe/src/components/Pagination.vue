@@ -1,3 +1,26 @@
+<script lang="ts">
+//import Vue from 'vue'
+import Component from 'vue-class-component'
+
+@Component({
+  props: {
+    currentPage: String,
+    lastPage: Number
+  },
+  components: {
+  }
+})
+
+export default class Pagination {
+}
+</script>
+
+<style scoped>
+  .pagination {
+    padding-top: 50px;
+  }
+</style>
+
 <template>
   <div class="pagination">
     <button class="btn btn-default" @click="currentPage--"
@@ -11,25 +34,3 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-
-@Component({
-  props: {
-    currentPage: String,
-    lastPage: Number
-  },
-  components: {
-  }
-})
-
-export default class Pagination extends Vue {
-}
-</script>
-
-<style scoped>
-  .pagination {
-    padding-top: 50px;
-  }
-</style>
