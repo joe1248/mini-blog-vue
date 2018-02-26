@@ -4,7 +4,7 @@
       <div class="nav-wrapper">
         <form>
           <div class="input-field">
-            <input v-model="searchedQuery" id="search" type="search" class="grey lighten-5 blue-text"
+            <input v-model="searchQuery" id="search" type="search" class="grey lighten-5 blue-text"
                    v-on:keyup="searchInArticlesDebounced">
             <label for="search"><i class="material-icons">search</i></label>
             <i class="material-icons">close</i>
@@ -13,8 +13,11 @@
       </div>
     </nav>
 
-    <div class="search-results">
-      <div v-for="(article, index) in results" class="collection" :key="index">
+    <div v-if="lastSearchQuery !== ''" class="search-results">
+      <div v-if="results && results.length === 0" class="collection">
+        <div class="collection-item">No results for "{{lastSearchQuery}}"</div>
+      </div>
+      <div v-else v-for="(article, index) in results" class="collection" :key="index">
         <router-link :to="{name: 'ArticleView', params: { id: article.id } }"
                      class="collection-item">
           {{article.title}}
@@ -40,26 +43,30 @@ import ApiService from '../ApiService'
 
 export default class Search extends Vue {
   // data
-  error: string = '';
-  previousSearchedQuery: string = '';
-  searchedQuery: string = '';
-  results: Array<ArticleInterface> = [];
+  error: string = ''
+  previousSearchQuery: string = ''
+  lastSearchQuery: string = ''
+  searchQuery: string = ''
+  results: Array<ArticleInterface> = []
 
   searchInArticlesDebounced = _.debounce(() => {
     this.searchInArticles()
   }, 500);
 
   searchInArticles () {
-    if (this.searchedQuery && this.searchedQuery !== this.previousSearchedQuery) {
-      this.previousSearchedQuery = this.searchedQuery
+    if (this.searchQuery && this.searchQuery !== this.previousSearchQuery) {
+      this.previousSearchQuery = this.searchQuery
       ApiService.searchArticles(
-        this.searchedQuery,
+        this.searchQuery,
         (err: string, articles: Array<ArticleInterface>) => {
           if (err) {
             this.error = err
             return
           }
           this.results = articles
+          Vue.nextTick(() => {
+            this.lastSearchQuery = this.searchQuery
+          })
         }
       )
     }
