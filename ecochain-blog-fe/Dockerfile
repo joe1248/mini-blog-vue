@@ -9,7 +9,7 @@
 # 4. launch the app
 # npm run dev   OR # npm run build
 
-# docker login
+# winpty docker login
 # docker push joseph1248/mini-blog-vue-img
 
 FROM php:7.2-apache
@@ -42,11 +42,13 @@ COPY package*.json ./
 # STEP 3: install Front-End dependencies
 RUN npm install --ignore-scripts --unsafe-perm
 
-# copy HTTPD.conf ini file to configure Apache
-COPY docker/httpd.conf /etc/apache2/sites-enabled/000-default.conf
-
 COPY . ./
 
 ENV NODE_ENV development
 
-EXPOSE 8080
+# copy HTTPD.conf ini file to configure Apache
+COPY docker/httpd.conf /etc/apache2/sites-enabled/000-default.conf
+
+RUN npm run build
+
+EXPOSE 80
