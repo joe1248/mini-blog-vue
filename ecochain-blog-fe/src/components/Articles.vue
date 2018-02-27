@@ -19,7 +19,7 @@
         <router-link :to="{name: 'Articles', params: { currentPage: (parseInt(currentPage) + 1).toString() } }"
                      class="btn btn-default"
                      :disabled="parseInt(currentPage) >= numberOfPages">
-          Next
+          Next page
         </router-link>
       </div>
     </div>
