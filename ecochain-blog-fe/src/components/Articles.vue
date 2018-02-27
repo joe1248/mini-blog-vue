@@ -55,7 +55,7 @@ export default class Articles extends Vue {
   // data
   loading: boolean = false
   error: string = ''
-  pagedArticles: Array<ArticleInterface>
+  pagedArticles: Array<ArticleInterface> = []
   prevPageUrl: string = ''
   nextPageUrl: string = ''
   numberOfPages: number = 1
